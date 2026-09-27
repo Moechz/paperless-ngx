@@ -1,0 +1,188 @@
+{
+  "app_id": "paperlessngxdocker",
+  "title": "Paperless-ngx",
+  "image": "paperlessngx/paperless-ngx:3.2.1",
+  "repo_name": "paperless-ngx",
+  "mode": "wrapper",
+  "entrypoint_file": "src/entrypoint.sh",
+  "wrapper_note": "the upstream image already runs its whole stack as the unprivileged\n\"paperless\" user (uid 1000) through s6-overlay, so this entrypoint is not\nabout privileges: it generates the PAPERLESS_SECRET_KEY the image refuses to\ninvent (kept in the data volume so it survives updates) and applies the\noptional data/extra-env.txt, which is the only way a TOS user can reach the\nmany environment-only settings (OCR language, public URL, mail). It then hands\nover to the unchanged upstream init (/init).\n",
+  "wrapper_note_readme": "- **Entrypoint wrapper (not for privileges)**: the upstream image already runs its stack as the unprivileged `paperless` user, so the wrapper is not about privileges. `src/entrypoint.sh` generates the required `PAPERLESS_SECRET_KEY` once and keeps it in the data volume, creates the first administrator with a random password (stored in `data/admin-password.txt`), applies the optional `data/extra-env.txt`, and then hands over to the unchanged upstream `init` (`/init`).",
+  "container_port": 8000,
+  "category": [
+    "Utilities"
+  ],
+  "user": "1000:1000",
+  "depends_on": [
+    "paperlessngxdocker-broker"
+  ],
+  "volumes": [
+    {
+      "host": "/Volume1/DockerAppData/paperlessngxdocker/data",
+      "container": "/usr/src/paperless/data"
+    },
+    {
+      "host": "/Volume1/DockerAppData/paperlessngxdocker/media",
+      "container": "/usr/src/paperless/media"
+    },
+    {
+      "host": "/Volume1/DockerAppData/paperlessngxdocker/consume",
+      "container": "/usr/src/paperless/consume"
+    },
+    {
+      "host": "/Volume1/DockerAppData/paperlessngxdocker/export",
+      "container": "/usr/src/paperless/export"
+    }
+  ],
+  "extra_services": [
+    {
+      "name": "paperlessngxdocker-broker",
+      "image": "valkey/valkey:9-alpine",
+      "command": [
+        "valkey-server",
+        "--save",
+        "",
+        "--appendonly",
+        "no",
+        "--dir",
+        "/data"
+      ],
+      "volumes": [
+        {
+          "host": "/Volume1/DockerAppData/paperlessngxdocker/redis",
+          "container": "/data"
+        }
+      ],
+      "environment": {
+        "TZ": "Asia/Shanghai"
+      },
+      "healthcheck": [
+        "CMD-SHELL",
+        "valkey-cli ping | grep -q PONG"
+      ],
+      "healthcheck_interval": "30s",
+      "healthcheck_timeout": "10s",
+      "healthcheck_retries": 3,
+      "healthcheck_start_period": "10s"
+    }
+  ],
+  "env": {
+    "TZ": "Asia/Shanghai",
+    "PAPERLESS_REDIS": "redis://paperlessngxdocker-broker:6379",
+    "PAPERLESS_DBENGINE": "sqlite",
+    "PAPERLESS_TIME_ZONE": "Asia/Shanghai",
+    "PAPERLESS_OCR_LANGUAGE": "eng"
+  },
+  "healthcheck": [
+    "CMD-SHELL",
+    "curl -s -o /dev/null http://127.0.0.1:8000/ || exit 1"
+  ],
+  "healthcheck_interval": "20s",
+  "healthcheck_timeout": "10s",
+  "healthcheck_retries": 5,
+  "healthcheck_start_period": "60s",
+  "auth": "paperless-ngx",
+  "upstream_url": "https://github.com/paperless-ngx/paperless-ngx",
+  "upstream_license": "GPL-3.0",
+  "license": "GPL-3.0",
+  "descript": "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder.",
+  "release_note": "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder.",
+  "important": "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal.",
+  "data_notes": "The four mounted folders are the whole application: `consume` is watched - every file placed there is imported, OCRed and moved into `media`; `data` holds the SQLite database, the OCR text, the search index, the auto-generated `secret-key`, the first administrator password and `extra-env.txt`; `media` holds the original documents and previews; `export` receives bulk exports from the web UI.",
+  "design_notes": [
+    "**Works as a non-root container.** The upstream image starts s6-overlay as root by default; verified on real hardware that the whole stack (init, migrations, Granian web server, Celery worker and beat) runs with `user: \"1000:1000\"`, which is exactly the image's own `paperless` user.",
+    "**The required secret key is generated once and kept.** The image refuses to start with its shipped default key. `src/entrypoint.sh` creates a unique key with the CSPRNG and stores it in the data volume, so it survives updates and re-installs, and a restore keeps working sessions.",
+    "**A first administrator without a shared password.** The wrapper creates user `admin` with a random password and leaves it in `data/admin-password.txt` (plus the container log), so no two installations share credentials and there is no manual `createsuperuser` step.",
+    "**A supported way to set environment-only options.** Paperless is configured exclusively through environment variables; `data/extra-env.txt` (seeded with commented examples for the OCR language and the public URL) applies them on every start without editing the package.",
+    "**Two containers, one published port.** The image needs a Redis-compatible broker, so the compose project runs `paperlessngx/paperless-ngx` plus `valkey/valkey:9-alpine`. Only the Paperless web server publishes a host port; the broker runs without persistence, because it only carries the task queue.",
+    "**Health check** probing the Paperless web server on container port 8000."
+  ],
+  "limitations": [
+    "Only one host port is published, and automatic HTTPS is not available. Do not expose the port to the internet without a TLS reverse proxy.",
+    "OCR defaults to English. To scan other languages, add them in `data/extra-env.txt` (for example `PAPERLESS_OCR_LANGUAGES=chi_sim` together with `PAPERLESS_OCR_LANGUAGE=chi_sim+eng`) and restart the application; the additional traineddata files are downloaded on first use.",
+    "E-mail links and the share links Paperless generates use `http://localhost:8000` until you set `PAPERLESS_URL` in `data/extra-env.txt` to `http://<NAS-IP>:8011`.",
+    "Paperless and its broker are two containers of the same application. Stopping or removing one of them outside the App Center leaves the other behind; use the App Center (or `docker compose`) so both are handled together.",
+    "The bundled database is SQLite, which is fine for personal and small-office archives. For very large archives PostgreSQL is more suitable, but that requires editing the compose file."
+  ],
+  "runtime_files": [
+    {
+      "path": "data/secret-key",
+      "purpose": "PAPERLESS_SECRET_KEY, generated once and used to sign sessions",
+      "created": "first start",
+      "growth": "static",
+      "lifecycle": "never overwritten; a restore without it invalidates every session"
+    },
+    {
+      "path": "data/admin-password.txt",
+      "purpose": "password of the automatically created first administrator",
+      "created": "first start",
+      "growth": "static",
+      "lifecycle": "never overwritten; only used while no superuser exists"
+    },
+    {
+      "path": "data/extra-env.txt",
+      "purpose": "optional environment settings (OCR language, public URL, mail, ...)",
+      "created": "first start",
+      "growth": "user controlled",
+      "lifecycle": "never overwritten; edit it and restart the application"
+    },
+    {
+      "path": "data/db.sqlite3",
+      "purpose": "documents, tags, correspondents, users and the task queue state (SQLite database)",
+      "created": "first start (migrations)",
+      "growth": "grows with every imported document",
+      "lifecycle": "never overwritten; back it up before uninstalling with data removal"
+    },
+    {
+      "path": "data/index",
+      "purpose": "full-text search index built from the OCR text",
+      "created": "first start",
+      "growth": "roughly the size of the extracted text",
+      "lifecycle": "rebuildable from the documents if it is lost"
+    },
+    {
+      "path": "media",
+      "purpose": "the original documents and the generated previews and thumbnails",
+      "created": "with the first imported document",
+      "growth": "grows with every archived document",
+      "lifecycle": "never overwritten; this is your archive"
+    },
+    {
+      "path": "consume",
+      "purpose": "watched folder - every file placed here is imported and then removed",
+      "created": "first start",
+      "growth": "bounded by what you drop in",
+      "lifecycle": "managed by Paperless"
+    },
+    {
+      "path": "export",
+      "purpose": "destination for the bulk exports triggered in the web UI",
+      "created": "first start",
+      "growth": "grows with the exports you run",
+      "lifecycle": "safe to delete"
+    }
+  ],
+  "platform": "x86_64",
+  "publisher": "Moechz",
+  "compose_project": "paperlessngxdocker",
+  "github_repo": "paperless-ngx",
+  "upstream_version": "3.2.1",
+  "release_tag_prefix": "v",
+  "version": "3.2.1-1",
+  "help": "https://github.com/Moechz/paperless-ngx/issues",
+  "official": "https://github.com/paperless-ngx/paperless-ngx",
+  "host_port": 8011,
+  "translations": {
+    "zh-cn": {
+      "descript": "Paperless-ngx 是自托管的文档归档系统。把扫描件、合同、发票、收据丢进 consume 目录，它会自动归档、做 OCR 文字识别，让每份文档都能全文搜索，并自动给出日期、往来单位与标签建议。整个档案库保存在你的 NAS 上，用浏览器即可访问。本应用在 NAS 上以非 root 容器运行 Docker Hub 官方镜像，并附带一个轻量的 Redis 兼容 broker，数据库、识别出的文字与文档原件都保存在应用数据目录中。",
+      "important": "需要 DockerEngine（缺失时应用中心会自动提示安装）；若 NAS 无法直连 Docker Hub，请先配置镜像加速。安装后打开 http://<NAS-IP>:8011/。首个管理员会自动创建：用户名 admin，密码见 DockerAppData/paperlessngxdocker/data/admin-password.txt（也打印在 docker logs paperlessngxdocker 里）。要归档的文件放进 consume 目录。data 目录保存数据库、OCR 文本、搜索索引与密钥。更多设置（OCR 语言、对外地址）写在 data/extra-env.txt 中，默认 OCR 语言为英文。卸载并删除数据前请先备份 data 与 media 目录。",
+      "release_note": "1. 首次发布：来自 Docker Hub 的 Paperless-ngx 3.2.1，附带 Valkey broker，以非 root 容器运行。文档、SQLite 数据库、OCR 文本、搜索索引与自动生成的密钥都保存在应用数据目录。"
+    },
+    "zh-hk": {
+      "descript": "Paperless-ngx 是自架式文件歸檔系統。把掃描件、合約、發票、收據放進 consume 目錄，它會自動歸檔、做 OCR 文字辨識，讓每份文件都能全文搜尋，並自動給出日期、往來單位與標籤建議。整個檔案庫保存在你的 NAS 上，用瀏覽器即可存取。本應用在 NAS 上以非 root 容器執行 Docker Hub 官方映像，並附帶一個輕量的 Redis 相容 broker，資料庫、辨識出的文字與文件原件都保存在應用資料目錄中。",
+      "important": "需要 DockerEngine（缺少時應用中心會自動提示安裝）；若 NAS 無法直連 Docker Hub，請先設定映像加速。安裝後開啟 http://<NAS-IP>:8011/。首個管理員會自動建立：使用者名稱 admin，密碼見 DockerAppData/paperlessngxdocker/data/admin-password.txt（也列印在 docker logs paperlessngxdocker 中）。要歸檔的檔案放進 consume 目錄。data 目錄保存資料庫、OCR 文字、搜尋索引與金鑰。更多設定（OCR 語言、對外位址）寫在 data/extra-env.txt 中，預設 OCR 語言為英文。解除安裝並刪除資料前請先備份 data 與 media 目錄。",
+      "release_note": "1. 首次發佈：來自 Docker Hub 的 Paperless-ngx 3.2.1，附帶 Valkey broker，以非 root 容器執行。文件、SQLite 資料庫、OCR 文字、搜尋索引與自動產生的金鑰都保存在應用資料目錄。"
+    }
+  },
+  "docker_socket": false,
+  "group_add": []
+}

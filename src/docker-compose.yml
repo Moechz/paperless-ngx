@@ -1,0 +1,88 @@
+# ===========================================================================
+# Paperless-ngx for TerraMaster TOS 7 (Docker application)
+# ===========================================================================
+# Upstream image : paperlessngx/paperless-ngx:3.2.1 (Docker Hub, used unmodified)
+#                  -> https://github.com/paperless-ngx/paperless-ngx
+#
+# Ports   : host 8011 -> container 8000. The host port is in the
+#           TOS-recommended 8000-19999 range and is not one of the reserved
+#           ports (22/80/443/445/3306/5050/5432/6379/8181/8443).
+# Volumes : all persistent data lives below
+#           /Volume1/DockerAppData/paperlessngxdocker/. The /Volume* wildcard is
+#           deliberately NOT used: the platform does not expand it.
+# TOS rules honoured: Docker Hub image with a fixed tag (never ':latest'),
+#           container_name == application id, restart: unless-stopped,
+#           non-root user, no privileged mode, no network_mode: host, no
+#           cap_add, explicit TZ, a healthcheck on the only service, and
+#           x-app-meta as the last block.
+# Wrapper : the upstream image already runs its whole stack as the unprivileged
+#           "paperless" user (uid 1000) through s6-overlay, so this entrypoint is not
+#           about privileges: it generates the PAPERLESS_SECRET_KEY the image refuses to
+#           invent (kept in the data volume so it survives updates) and applies the
+#           optional data/extra-env.txt, which is the only way a TOS user can reach the
+#           many environment-only settings (OCR language, public URL, mail). It then hands
+#           over to the unchanged upstream init (/init).
+# Escaping: docker compose interpolates ${VAR}/$VAR in compose files, so any
+#           '$' meant for the shell is written '$$'.
+#
+# NOTE for maintainers: never place a comment line directly in front of a
+# "- value" sequence item (ports, volumes, ...). The official
+# TOSAppSelfTestingTool parses the compose file line by line; a comment inside
+# a sequence makes it skip its permission sync, the mounted directories stay
+# root-owned and the non-root container cannot write into them.
+
+services:
+  paperlessngxdocker:
+    image: paperlessngx/paperless-ngx:3.2.1
+    container_name: paperlessngxdocker
+    restart: unless-stopped
+    user: "1000:1000"
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        @@ENTRYPOINT_SH@@
+    depends_on:
+      - paperlessngxdocker-broker
+    ports:
+      - "8011:8000"
+    environment:
+      TZ: "Asia/Shanghai"
+      PAPERLESS_REDIS: "redis://paperlessngxdocker-broker:6379"
+      PAPERLESS_DBENGINE: "sqlite"
+      PAPERLESS_TIME_ZONE: "Asia/Shanghai"
+      PAPERLESS_OCR_LANGUAGE: "eng"
+    volumes:
+      - /Volume1/DockerAppData/paperlessngxdocker/data:/usr/src/paperless/data
+      - /Volume1/DockerAppData/paperlessngxdocker/media:/usr/src/paperless/media
+      - /Volume1/DockerAppData/paperlessngxdocker/consume:/usr/src/paperless/consume
+      - /Volume1/DockerAppData/paperlessngxdocker/export:/usr/src/paperless/export
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -o /dev/null http://127.0.0.1:8000/ || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  paperlessngxdocker-broker:
+    image: valkey/valkey:9-alpine
+    container_name: paperlessngxdocker-broker
+    restart: unless-stopped
+    user: "1000:1000"
+    command: ["valkey-server", "--save", "", "--appendonly", "no", "--dir", "/data"]
+    environment:
+      TZ: "Asia/Shanghai"
+    volumes:
+      - /Volume1/DockerAppData/paperlessngxdocker/redis:/data
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli ping | grep -q PONG"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+# TOS App Center web metadata (must be the last block of the file):
+# web.port is the published host port above, protocol is http.
+x-app-meta:
+  web:
+    port: 8011
+    protocol: http

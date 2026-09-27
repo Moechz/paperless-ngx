@@ -1,0 +1,195 @@
+# ===========================================================================
+# Multilingual file for the TOS 7 Docker application "paperlessngxdocker".
+# File name MUST be: <appid>.lang.  23-language superset (14 required by TOS).
+# The App Center picks the text matching the user's device language;
+# untranslated nodes fall back to English, which the official guide allows.
+# Fields: name (app title), auth (upstream author), descript (up to 512
+# chars), release_note, important (up to 512 chars).
+# Translations come from tosapp.json "translations"; run
+#   tosdocker lang <app>          to re-render this file
+#   tosdocker translate <app>     to see what still needs translating
+# ===========================================================================
+[en-us]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[zh-cn]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx 是自托管的文档归档系统。把扫描件、合同、发票、收据丢进 consume 目录，它会自动归档、做 OCR 文字识别，让每份文档都能全文搜索，并自动给出日期、往来单位与标签建议。整个档案库保存在你的 NAS 上，用浏览器即可访问。本应用在 NAS 上以非 root 容器运行 Docker Hub 官方镜像，并附带一个轻量的 Redis 兼容 broker，数据库、识别出的文字与文档原件都保存在应用数据目录中。"
+release_note = "1. 首次发布：来自 Docker Hub 的 Paperless-ngx 3.2.1，附带 Valkey broker，以非 root 容器运行。文档、SQLite 数据库、OCR 文本、搜索索引与自动生成的密钥都保存在应用数据目录。"
+important    = "需要 DockerEngine（缺失时应用中心会自动提示安装）；若 NAS 无法直连 Docker Hub，请先配置镜像加速。安装后打开 http://<NAS-IP>:8011/。首个管理员会自动创建：用户名 admin，密码见 DockerAppData/paperlessngxdocker/data/admin-password.txt（也打印在 docker logs paperlessngxdocker 里）。要归档的文件放进 consume 目录。data 目录保存数据库、OCR 文本、搜索索引与密钥。更多设置（OCR 语言、对外地址）写在 data/extra-env.txt 中，默认 OCR 语言为英文。卸载并删除数据前请先备份 data 与 media 目录。"
+
+[zh-hk]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx 是自架式文件歸檔系統。把掃描件、合約、發票、收據放進 consume 目錄，它會自動歸檔、做 OCR 文字辨識，讓每份文件都能全文搜尋，並自動給出日期、往來單位與標籤建議。整個檔案庫保存在你的 NAS 上，用瀏覽器即可存取。本應用在 NAS 上以非 root 容器執行 Docker Hub 官方映像，並附帶一個輕量的 Redis 相容 broker，資料庫、辨識出的文字與文件原件都保存在應用資料目錄中。"
+release_note = "1. 首次發佈：來自 Docker Hub 的 Paperless-ngx 3.2.1，附帶 Valkey broker，以非 root 容器執行。文件、SQLite 資料庫、OCR 文字、搜尋索引與自動產生的金鑰都保存在應用資料目錄。"
+important    = "需要 DockerEngine（缺少時應用中心會自動提示安裝）；若 NAS 無法直連 Docker Hub，請先設定映像加速。安裝後開啟 http://<NAS-IP>:8011/。首個管理員會自動建立：使用者名稱 admin，密碼見 DockerAppData/paperlessngxdocker/data/admin-password.txt（也列印在 docker logs paperlessngxdocker 中）。要歸檔的檔案放進 consume 目錄。data 目錄保存資料庫、OCR 文字、搜尋索引與金鑰。更多設定（OCR 語言、對外位址）寫在 data/extra-env.txt 中，預設 OCR 語言為英文。解除安裝並刪除資料前請先備份 data 與 media 目錄。"
+
+[fr-fr]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[de-de]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[it-it]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[es-es]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[hu-hu]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[ja-jp]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[ko-kr]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[pl-pl]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[ru-ru]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[tr-tr]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[pt-pt]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[ar-sa]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[cs-cz]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[he-il]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[id-id]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[nb-no]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[nl-nl]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[sv-se]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[th-th]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
+[vi-vn]
+name         = "Paperless-ngx"
+auth         = "paperless-ngx"
+version      = "@@VERSION@@"
+descript     = "Paperless-ngx is a self-hosted document archive. Drop scans, contracts, invoices and receipts into the consume folder and Paperless files them, runs OCR so every document becomes full-text searchable, and suggests a date, a correspondent and tags for each one. The archive lives on your NAS. This app runs the official Docker Hub image as a non-root container together with a small Redis-compatible broker, and keeps the database, the OCR text and your documents in the application data folder."
+release_note = "1. First release: Paperless-ngx 3.2.1 from Docker Hub with a Valkey broker, running as non-root containers. Documents, the SQLite database, the OCR text, the search index and the automatically generated secret key live in the application data folder."
+important    = "Requires DockerEngine (installed if missing); add a registry mirror if Docker Hub is unreachable. Open http://<NAS-IP>:8011/. The first administrator is user admin; its password is in DockerAppData/paperlessngxdocker/data/admin-password.txt, also printed by docker logs paperlessngxdocker. Drop files to archive into consume. Extra settings (OCR language, public URL) go into data/extra-env.txt; OCR is English by default. Back up data and media before uninstalling with data removal."
+
