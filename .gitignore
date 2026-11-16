@@ -13,3 +13,7 @@ HANDOFF.md
 # --- build machine noise ---
 .DS_Store
 ._*
+
+# --- local packaging helpers (never published) ---
+/.toolkit/
+/.gitconfig-local
