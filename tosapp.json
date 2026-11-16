@@ -167,7 +167,7 @@
   "github_repo": "paperless-ngx",
   "upstream_version": "3.2.1",
   "release_tag_prefix": "v",
-  "version": "3.2.1-1",
+  "version": "3.2.1-2",
   "help": "https://github.com/Moechz/paperless-ngx/issues",
   "official": "https://github.com/paperless-ngx/paperless-ngx",
   "host_port": 8011,
